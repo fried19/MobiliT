@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "894181393446",
+    "firebase_url": "https://mobilit-79fe7.firebaseio.com",
+    "project_id": "mobilit-79fe7",
+    "storage_bucket": "mobilit-79fe7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894181393446:android:5dea3937b6f77a33",
+        "android_client_info": {
+          "package_name": "com.andsomore.mobilit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894181393446-tgglgba5bgt571r311l1to4g1b74jd0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyXnQq-XVpmkYsjg75-rlBOwyLDFzxULc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894181393446-tgglgba5bgt571r311l1to4g1b74jd0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
