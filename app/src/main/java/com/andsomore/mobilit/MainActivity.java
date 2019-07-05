@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView busIconImageView;
     private TextView busTextView;
     private EditText Email,Password;
-    private Button btShowPassword;
+    private Button btShowPassword,btConnexion;
     private ProgressBar loadingProgressBar;
     private RelativeLayout rootView, afterAnimationView;
 
@@ -83,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Methode qui se declanche dès un click sur le boutton Connexion
+        btConnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              if(isEmpty()==true){
+                  affichageErreur();
+              }else{
+                  if(isValidEmail(Email.getText().toString())==false){
+                      Email.setError("Veuillez saisir un mail sous la forme xyz@gmail.com");
+                  }
+              }
+            }
+        });
+
     }
 
     private void initViews() {
@@ -91,9 +106,42 @@ public class MainActivity extends AppCompatActivity {
         loadingProgressBar = findViewById(R.id.loadingProgressBar);
         busIconImageView=findViewById(R.id.busIconImageView);
         rootView = findViewById(R.id.rootView);
+        Email=findViewById(R.id.emailEditText);
         Password=findViewById(R.id.passwordEditText);
         btShowPassword=findViewById(R.id.showPassword);
+        btConnexion=findViewById(R.id.btConnexion);
         afterAnimationView = findViewById(R.id.afterAnimationView);
+    }
+    public boolean isEmpty(){
+
+        if((Email.length()==0)
+        ||(Password.length()==0))
+        {
+          return true;
+        }else
+            return false;
+
+    }
+    public void affichageErreur(){
+        if((Email.length()==0)&&(Password.length()==0)){
+            Email.setError("Veuiller saisir le mail");
+            Password.setError("Veuillez saisir le mot de passe");
+
+        }else if(Email.length()==0){
+            Email.setError("Veuiller saisir le mail");
+
+        }else if(Password.length()==0){
+            Password.setError("Veuillez saisir le mot de passe");
+
+        }
+    }
+    public boolean isValidEmail(String email){
+        boolean valid = EmailValidator.getInstance(false).isValid(email);
+        if(valid==true){
+            return true;
+        }else
+            return false;
+
     }
     private void startAnimation() {
         ViewPropertyAnimator viewPropertyAnimator = busIconImageView.animate();
