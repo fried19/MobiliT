@@ -7,11 +7,16 @@ import androidx.core.content.ContextCompat;
 import android.animation.Animator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -25,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView busImageView;
     private ImageView busIconImageView;
     private TextView busTextView;
+    private EditText Email,Password;
+    private Button btShowPassword;
     private ProgressBar loadingProgressBar;
     private RelativeLayout rootView, afterAnimationView;
 
@@ -53,13 +60,39 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }.start();
+
+        //Thread pour afficher le mdp sur l'action onLongClick du boutton
+        btShowPassword.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Thread thread = new Thread(new Runnable(){
+
+                    @Override
+                    public void run() {
+                            while((btShowPassword.isPressed())){
+
+                                Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            }
+                        if (!btShowPassword.isPressed()){
+                            Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        }
+                    }
+                });
+                thread.start();
+                return true;
+            }
+        });
+
     }
+
     private void initViews() {
         busImageView = findViewById(R.id.busImageView);
         busTextView = findViewById(R.id.busTextView);
         loadingProgressBar = findViewById(R.id.loadingProgressBar);
         busIconImageView=findViewById(R.id.busIconImageView);
         rootView = findViewById(R.id.rootView);
+        Password=findViewById(R.id.passwordEditText);
+        btShowPassword=findViewById(R.id.showPassword);
         afterAnimationView = findViewById(R.id.afterAnimationView);
     }
     private void startAnimation() {

@@ -95,18 +95,33 @@
                 android:textColor="@color/colorTextView"
                 android:textColorHint="@color/colorAccent"
                 android:inputType="textEmailAddress"
+
                 android:textSize="15sp" />
 
-            <EditText
-                android:id="@+id/passwordEditText"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="@string/password"
-                android:textColor="@color/colorTextView"
-                android:textColorHint="@color/colorAccent"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:hint="@string/password"
+                    android:textColor="@color/colorTextView"
+                    android:textColorHint="@color/colorAccent"
+                    android:inputType="textPassword"
+                    android:textSize="15sp" />
+                <Button
+                    android:id="@+id/showPassword"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/emailEditText"
+                    android:layout_marginBottom="-15dp"
+                    android:background="@drawable/oeil" />
+            </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -118,6 +133,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_up"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground"
                     android:textColor="@color/colorTextView"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -128,6 +146,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
                     android:text="@string/forget_password"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="@color/colorTextView"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -143,6 +164,7 @@
             android:layout_above="@+id/skipTextView"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button_drawable"
+            android:clickable="true"
             android:text="@string/login"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
