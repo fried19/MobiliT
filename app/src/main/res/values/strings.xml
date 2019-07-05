@@ -2,11 +2,11 @@
     <string name="app_name">MobiliT</string>
     <string name="booki">MobiliT</string>
     <string name="welcome_back">Soyez le Bienvenue</string>
-    <string name="read_it_together">Read it together</string>
+    <string name="read_it_together">Connectez-vous ici</string>
     <string name="skip">Skip</string>
-    <string name="login">Login</string>
+    <string name="login">Connexion</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="sign_up">Sign up</string>
-    <string name="forget_password">Forget Password.?</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="forget_password">Mot de passe oublié.?</string>
 </resources>

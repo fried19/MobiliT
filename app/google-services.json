@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "894181393446-pm84q3q490u1j1jmt7e1i1rufcimm92k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andsomore.mobilit",
+            "certificate_hash": "b0629bfdfc9604afadf8ea15d6301853d16b4bc9"
+          }
+        },
+        {
           "client_id": "894181393446-tgglgba5bgt571r311l1to4g1b74jd0n.apps.googleusercontent.com",
           "client_type": 3
         }
