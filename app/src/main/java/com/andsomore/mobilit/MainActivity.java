@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         initViews();
-        new CountDownTimer(1000, 1000) {
+        new CountDownTimer(10000, 1000) {
 
             @Override
             public void onFinish() {
