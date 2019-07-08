@@ -5,6 +5,7 @@
     <color name="colorAccent">#EE3471</color>
     <color name="colorBackground">#FFFF</color>
     <color name="colorSplashText">#333C46</color>
+    <color name="colorAppName">#00BCD4</color>
     <color name="colorProgressBar">#FFCE511C</color>
     <color name="colorTextView">#83898E</color>
 </resources>
