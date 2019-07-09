@@ -24,9 +24,11 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        
+
+
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
