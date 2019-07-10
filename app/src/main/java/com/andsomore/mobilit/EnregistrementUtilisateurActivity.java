@@ -8,13 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 public class EnregistrementUtilisateurActivity extends AppCompatActivity {
     //Declaration des composants
     private RelativeLayout rlayout;
     private Animation animation;
-    private Menu menu;
+    private EditText Nom,Prenom,Telephone,Email,Password,Repassword;
+    private Spinner TypeUtilisateur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,14 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity {
 
     //Initialisation des composants
     private void InitViews() {
+        Nom=findViewById(R.id.etNom);
+        Prenom=findViewById(R.id.etPrenom);
+        Telephone=findViewById(R.id.etTelephone);
+        Email=findViewById(R.id.etEmail);
+        Password=findViewById(R.id.etPassword);
+        Repassword=findViewById(R.id.etRePassword);
+        TypeUtilisateur=findViewById(R.id.spTypeUtilisateur);
+
         rlayout     = findViewById(R.id.rlayout);
         animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
 

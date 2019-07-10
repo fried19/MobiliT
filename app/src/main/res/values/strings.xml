@@ -1,12 +1,23 @@
 <resources>
     <string name="app_name">MobiliT</string>
-    <string name="booki">MobiliT</string>
-    <string name="welcome_back">Soyez le Bienvenue</string>
-    <string name="read_it_together">Connectez-vous ici</string>
-    <string name="skip">Skip</string>
-    <string name="login">Connexion</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="sign_up">S\'inscrire</string>
-    <string name="forget_password">Mot de passe oublié.?</string>
+    <string name="tvBienvnue">Soyez le Bienvenue</string>
+    <string name="tvlogin">Connexion</string>
+    <string name="btLogin">Se connecter</string>
+    <string name="tvEmail">Email</string>
+    <string name="tvNewUser">Pas encore de compte? Créer le ici </string>
+    <string name="tvPassword">Password</string>
+    <string name="tvRePassword">Repetez le Password</string>
+    <string name="tvNom">Nom</string>
+    <string name="tvPrenom">Prénom</string>
+    <string name="tvTelephone">Télephone</string>
+    <string name="tvInscription">Inscription</string>
+    <string name="btInscription">S\'inscrire</string>
+
+
+    <string-array name="typeCompte">
+        <item>--Choisissez le type d\'utilisateur--</item>
+        <item>Client</item>
+        <item>Chauffeur</item>
+    </string-array>
+
 </resources>
