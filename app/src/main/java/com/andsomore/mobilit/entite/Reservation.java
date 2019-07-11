@@ -3,8 +3,8 @@ package com.andsomore.mobilit.entite;
 import java.util.Date;
 
 public class Reservation {
-    private static  int IdReservation;
-    private static int NumPlace;
+    private static  int IdReservation=1;
+    private static int NumPlace=1;
     private Date DateReservation;
     private int NumVoyage;
     private int IdClient;

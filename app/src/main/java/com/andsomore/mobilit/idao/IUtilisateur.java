@@ -5,4 +5,5 @@ public interface IUtilisateur <T>{
     public boolean seDeconnecter(T t);
     public boolean modifierInfoCompte(T t);
     public boolean supprimerCompte(T t);
+    public boolean creerCompte(T t);
 }

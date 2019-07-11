@@ -9,5 +9,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorProgressBar">#FFCE511C</color>
     <color name="colorSplashText">#333C46</color>
+    <color name="colorBlack">#000</color>
+
 </resources>
 

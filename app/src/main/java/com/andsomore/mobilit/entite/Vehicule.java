@@ -1,7 +1,7 @@
 package com.andsomore.mobilit.entite;
 
 public class Vehicule {
-    private static int Id;
+    private static int Id=1;
     private String Immatriculation;
     private String NomBapteme;
     private int NombrePlace;

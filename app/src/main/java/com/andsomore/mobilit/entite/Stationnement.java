@@ -1,7 +1,7 @@
 package com.andsomore.mobilit.entite;
 
 public class Stationnement {
-    private static int Id;
+    private static int Id=1;
     private String Lieu;
 
     public Stationnement(){}

@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="60dp"
         android:background="@drawable/header_register"
         android:elevation="10dp"
         android:theme="@style/ToolbarTheme" />
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:elevation="10dp"
         android:text="@string/tvInscription"
         android:textColor="@color/colorWhite"
@@ -51,14 +51,15 @@
     <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="707dp">
 
         <RelativeLayout
             android:id="@+id/rlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="-5dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv"
@@ -70,8 +71,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="35dp">
+                    android:layout_height="619dp">
 
                     <TextView
                         android:id="@+id/tvNom"
@@ -92,7 +92,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="30dp"
                         android:inputType="textEmailAddress"
-                        android:padding="10dp" />
+                        android:padding="5sp" />
 
 
                     <TextView
@@ -115,7 +115,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="30dp"
                         android:inputType="text"
-                        android:padding="10dp" />
+                        android:padding="5sp" />
 
                     <TextView
                         android:id="@+id/tvTelephone"
@@ -137,23 +137,68 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="30dp"
                         android:inputType="number"
-                        android:padding="10dp" />
+                        android:padding="5sp" />
+
+                    <TextView
+                        android:id="@+id/tvChoixTypeUtilisateur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/etTelephone"
+                        android:layout_margin="15dp"
+                        android:text="@string/choixTypeCompte"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <Spinner
                         android:id="@+id/spTypeUtilisateur"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/etTelephone"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="28dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_below="@+id/tvChoixTypeUtilisateur"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
                         android:entries="@array/typeCompte" />
+
+
+                    <View
+                        android:id="@+id/vSeparation"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.2dp"
+                        android:layout_below="@+id/spTypeUtilisateur"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@android:color/black"
+                        android:drawablePadding="30dp"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/vSeparation"
+                        android:layout_margin="15dp"
+                        android:text="@string/tvEmail"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvEmail"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:drawablePadding="30dp"
+                        android:inputType="textEmailAddress"
+                        android:padding="5sp" />
+
 
                     <TextView
                         android:id="@+id/tvPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/spTypeUtilisateur"
+                        android:layout_below="@+id/etEmail"
                         android:layout_margin="15dp"
                         android:text="@string/tvPassword"
                         android:textColor="@color/colorPurple"
@@ -169,7 +214,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="30dp"
                         android:inputType="textPassword"
-                        android:padding="10dp" />
+                        android:padding="5sp" />
 
                     <TextView
                         android:id="@+id/tvRePassword"
@@ -191,7 +236,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="10dp"
                         android:inputType="textPassword"
-                        android:padding="10dp" />
+                        android:padding="5sp" />
 
                 </RelativeLayout>
 
@@ -210,9 +255,11 @@
                 android:elevation="10dp">
 
                 <Button
-                    android:id="@+id/btLogin"
+                    android:id="@+id/btInscription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="-2dp"
                     android:background="@drawable/bt_uisquare"
                     android:text="@string/btInscription"
                     android:textAllCaps="false"
@@ -222,6 +269,7 @@
 
         </RelativeLayout>
     </ScrollView>
+
 
 
 

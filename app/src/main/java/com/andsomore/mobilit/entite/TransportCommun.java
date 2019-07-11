@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TransportCommun {
 
-    private static int Num;
+    private static int Num=1;
     private Date DateTransport;
     public TransportCommun(){}
     public TransportCommun(Date dateTransport) {

@@ -1,7 +1,7 @@
 package com.andsomore.mobilit.entite;
 
 public class Agence {
-       private static int Id;
+       private static int Id=1;
        private String Nom;
        private String Lieu;
        private String Responsable;

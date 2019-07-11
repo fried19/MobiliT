@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Pair;
@@ -15,6 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.andsomore.mobilit.dao.TraitementUtilisateur;
+import com.andsomore.mobilit.entite.Utilisateur;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -23,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ImageButton btRegister;
     private TextView tvLogin, tvRegister;
     private Button btConnexion,btShowPassword;
-    private EditText Email,Password,RePassword,Nom,Prenom,Telephone;
+    private EditText etEmail,etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public boolean isEmpty(){
 
-        if((Email.length()==0) ||(Password.length()==0))
+        if((TextUtils.isEmpty(etEmail.getText().toString()))
+                ||(TextUtils.isEmpty(etPassword.getText().toString())))
         {
             return true;
         }else
@@ -53,9 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btRegister = findViewById(R.id.btRegister);
         tvRegister = findViewById(R.id.tvRegister);
         tvLogin = findViewById(R.id.tvLogin);
-        Email = findViewById(R.id.etEmail);
-        Password = findViewById(R.id.etPassword);
-        RePassword = findViewById(R.id.etRePassword);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
         btShowPassword = findViewById(R.id.showPassword);
         btConnexion = findViewById(R.id.btConnexion);
     }
@@ -74,26 +79,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //Methode qui se declanche dès un click sur le boutton Connexion
         if(v==btConnexion){
-            if(isEmpty()==true){
-                affichageErreur();
+            String Email=etEmail.getText().toString();
+            String Password=etPassword.getText().toString();
+            if(isEmpty()){
+                afficherMessageErreur();
             }else{
-                if(isValidEmail(Email.getText().toString())==false){
-                    Email.setError("Veuillez saisir un mail sous la forme xyz@gmail.com");
+                if(!isValidEmail(Email)){
+                    etEmail.requestFocus();
+                    etEmail.setError("Veuillez saisir un mail sous la forme xyz@gmail.com");
+                }else {
+                    Utilisateur utilisateur=new Utilisateur(Email,Password);
+                    TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
+                    if(traitementUtilisateur.seConnecter(utilisateur)){
+
+                        startActivity( new Intent(this, MainActivity.class));
+                    }else {
+                          Toast.makeText(this,"L'email et/ou le mot de passes " +
+                                  "ne figurent pas dans la base de données",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
     }
 
-    public void affichageErreur(){
-        if((Email.length()==0)&&(Password.length()==0)){
-            Email.setError("Veuiller saisir le mail");
-            Password.setError("Veuillez saisir le mot de passe");
+    public void afficherMessageErreur(){
+        if((TextUtils.isEmpty(etEmail.getText().toString()))
+                &&(TextUtils.isEmpty(etPassword.getText().toString()))){
+            etEmail.requestFocus();
+            etEmail.setError("Veuiller saisir le mail");
+            etPassword.setError("Veuillez saisir le mot de passe");
 
-        }else if(Email.length()==0){
-            Email.setError("Veuiller saisir le mail");
+        }else if(TextUtils.isEmpty(etEmail.getText().toString())){
+            etEmail.requestFocus();
+            etEmail.setError("Veuiller saisir le mail");
 
-        }else if(Password.length()==0){
-            Password.setError("Veuillez saisir le mot de passe");
+        }else if(TextUtils.isEmpty(etPassword.getText().toString())){
+            etPassword.requestFocus();
+            etPassword.setError("Veuillez saisir le mot de passe");
 
         }
     }
@@ -116,10 +138,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void run() {
                     while ((btShowPassword.isPressed())) {
 
-                        Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     }
                     if (!btShowPassword.isPressed()) {
-                        Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     }
                 }
             };

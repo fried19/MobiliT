@@ -3,52 +3,52 @@ package com.andsomore.mobilit.entite;
 
 
 public class Utilisateur {
-    protected static int Id;
-    protected String Nom;
-    protected String Prenom;
-    protected String Telephone;
-    protected String Email;
-    protected String Password;
-    protected String TypeUtilisateur;
+    protected String nom;
+    protected String prenom;
+    protected String telephone;
+    protected String email;
+    protected String password;
+    protected String typeUtilisateur;
+
 
     public Utilisateur(){
 
     }
-    public Utilisateur(String nom, String prenom, String telephone, String email, String password, String typeUtilisateur) {
-        Nom = nom;
-        Prenom = prenom;
-        Telephone = telephone;
-        Email = email;
-        Password = password;
-        TypeUtilisateur = typeUtilisateur;
-        Id++;
-    }
 
-    public static int getId() {
-        return Id;
+    public Utilisateur(String email,String password){
+        this.email = email;
+        this.password = password;
+    }
+    public Utilisateur(String nom, String prenom, String telephone, String email, String password, String typeUtilisateur) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.email = email;
+        this.password = password;
+        this.typeUtilisateur = typeUtilisateur;
     }
 
     public String getNom() {
-        return Nom;
+        return nom;
     }
 
     public String getPrenom() {
-        return Prenom;
+        return prenom;
     }
 
     public String getTelephone() {
-        return Telephone;
+        return telephone;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public String getTypeUtilisateur() {
-        return TypeUtilisateur;
+        return typeUtilisateur;
     }
 }
