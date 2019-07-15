@@ -28,6 +28,7 @@ public class Utilisateur {
         this.typeUtilisateur = typeUtilisateur;
     }
 
+
     public String getNom() {
         return nom;
     }

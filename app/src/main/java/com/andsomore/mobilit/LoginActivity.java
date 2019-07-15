@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
+import com.andsomore.mobilit.idao.IConnected;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvLogin, tvRegister;
     private Button btConnexion,btShowPassword;
     private EditText etEmail,etPassword;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etPassword = findViewById(R.id.etPassword);
         btShowPassword = findViewById(R.id.showPassword);
         btConnexion = findViewById(R.id.btConnexion);
+        progressDialog=new ProgressDialog(this);
     }
 
     //Animation au chargement de l'activite
@@ -75,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             pairs[0] = new Pair<View, String>(tvLogin, "login");
             ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
             startActivity(intent, activityOptions.toBundle());
+
         }
 
         //Methode qui se declanche dès un click sur le boutton Connexion
@@ -90,13 +95,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else {
                     Utilisateur utilisateur=new Utilisateur(Email,Password);
                     TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
-                    if(traitementUtilisateur.seConnecter(utilisateur)){
+                    progressDialog.setMessage("Connexion en cour...");
+                    progressDialog.show();
 
-                        startActivity( new Intent(this, MainActivity.class));
-                    }else {
-                          Toast.makeText(this,"L'email et/ou le mot de passes " +
-                                  "ne figurent pas dans la base de données",Toast.LENGTH_LONG).show();
-                    }
+                    traitementUtilisateur.seConnecter(utilisateur, ok -> {
+
+                        if(ok){
+                            startActivity(new Intent(this, MainActivity.class));
+                            finish();
+                        }else {
+                            progressDialog.cancel();
+                            Toast.makeText(this, "L'email et/ou le mot de passes " +
+                                    "ne figurent pas dans la base de données", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+
                 }
             }
         }

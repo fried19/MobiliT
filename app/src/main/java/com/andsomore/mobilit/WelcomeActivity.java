@@ -33,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 busImageView.setVisibility(GONE);
 
                 startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+                finish();
 
             }
 

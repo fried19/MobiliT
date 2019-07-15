@@ -3,6 +3,7 @@ package com.andsomore.mobilit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,9 +18,10 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import com.andsomore.mobilit.MainActivity;
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
+import com.andsomore.mobilit.idao.IConnected;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -31,6 +33,8 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
     private EditText etNom,etPrenom,etTelephone,etEmail,etPassword,etRepassword;
     private Spinner spTypeUtilisateur;
     private Button btInscription;
+    private View content;
+    private ProgressDialog progressDialog;
 
 
 
@@ -61,6 +65,8 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
         btInscription=findViewById(R.id.btInscription);
         rlayout     = findViewById(R.id.rlayout);
         animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
+
+        progressDialog=new ProgressDialog(this);
 
     }
 
@@ -97,19 +103,26 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
             }else {
                 Utilisateur utilisateur=new Utilisateur(Nom,Prenom,Telephone,Email,Pswd,TypeCompte);
                 TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
-                traitementUtilisateur.creerCompte(utilisateur);
-                if(traitementUtilisateur.creerCompte(utilisateur)){
-                    Toast.makeText(this,"Vous êtes maintenant inscrit!!",Toast.LENGTH_LONG).show();
-                    startActivity( new Intent(this, MainActivity.class));
-                }else {
-                    Toast.makeText(this,"Erreur!!Veuillez revérifier les données saisies",Toast.LENGTH_LONG).show();
-                    etNom.requestFocus();
+                progressDialog.setMessage("Enrégistrement en cour...");
+                progressDialog.show();
+
+                traitementUtilisateur.creerCompte(utilisateur, ok -> {
+                    if(ok){
+                        startActivity( new Intent(this, MainActivity.class));
+                        //Snackbar.make(main,"Vous êtes maintenant inscrit sur rnotre plateforme!! ",Snackbar.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(this,"Erreur!!Veuillez revérifier les données saisies",Toast.LENGTH_LONG).show();
+                        etNom.requestFocus();
+
+                    }
+
+                });
+
 
                 }
             }
 
         }
-    }
 
     public boolean isEmpty(){
 
