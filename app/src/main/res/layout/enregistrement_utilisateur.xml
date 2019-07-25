@@ -11,9 +11,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="30dp"
         android:background="@drawable/header_register"
-        android:elevation="10dp"
+        android:elevation="5dp"
         android:theme="@style/ToolbarTheme" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:elevation="10dp"
         android:text="@string/tvInscription"
         android:textColor="@color/colorWhite"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="-5dp">
 
             <androidx.cardview.widget.CardView
@@ -71,13 +71,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="619dp">
+                    android:layout_height="645dp"
+                    android:layout_marginTop="-5dp">
 
                     <TextView
                         android:id="@+id/tvNom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
+                        android:layout_margin="13dp"
                         android:text="@string/tvNom"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -90,9 +91,9 @@
                         android:layout_below="@+id/tvNom"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:drawablePadding="30dp"
+                        android:drawablePadding="10dp"
                         android:inputType="textEmailAddress"
-                        android:padding="5sp" />
+                        android:padding="8sp" />
 
 
                     <TextView
@@ -113,16 +114,16 @@
                         android:layout_below="@+id/tvPrenom"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:drawablePadding="30dp"
+                        android:drawablePadding="10dp"
                         android:inputType="text"
-                        android:padding="5sp" />
+                        android:padding="8sp" />
 
                     <TextView
                         android:id="@+id/tvTelephone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/etPrenom"
-                        android:layout_margin="15dp"
+                        android:layout_margin="13dp"
                         android:text="@string/tvTelephone"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -135,16 +136,16 @@
                         android:layout_below="@+id/tvTelephone"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:drawablePadding="30dp"
+                        android:drawablePadding="10dp"
                         android:inputType="number"
-                        android:padding="5sp" />
+                        android:padding="8sp" />
 
                     <TextView
                         android:id="@+id/tvChoixTypeUtilisateur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/etTelephone"
-                        android:layout_margin="15dp"
+                        android:layout_margin="16dp"
                         android:text="@string/choixTypeCompte"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -176,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/vSeparation"
-                        android:layout_margin="15dp"
+                        android:layout_margin="13dp"
                         android:text="@string/tvEmail"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -189,9 +190,9 @@
                         android:layout_below="@+id/tvEmail"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:drawablePadding="30dp"
+                        android:drawablePadding="10dp"
                         android:inputType="textEmailAddress"
-                        android:padding="5sp" />
+                        android:padding="8sp" />
 
 
                     <TextView
@@ -199,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/etEmail"
-                        android:layout_margin="15dp"
+                        android:layout_margin="13dp"
                         android:text="@string/tvPassword"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -212,16 +213,16 @@
                         android:layout_below="@+id/tvPassword"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:drawablePadding="30dp"
+                        android:drawablePadding="10dp"
                         android:inputType="textPassword"
-                        android:padding="5sp" />
+                        android:padding="8sp" />
 
                     <TextView
                         android:id="@+id/tvRePassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/etPassword"
-                        android:layout_margin="15dp"
+                        android:layout_margin="13dp"
                         android:text="@string/tvRePassword"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -236,7 +237,7 @@
                         android:layout_marginRight="15dp"
                         android:drawablePadding="10dp"
                         android:inputType="textPassword"
-                        android:padding="5sp" />
+                        android:padding="10sp" />
 
                 </RelativeLayout>
 
@@ -259,7 +260,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="-2dp"
+                    android:layout_marginEnd="-1dp"
+                    android:layout_margin="13dp"
                     android:background="@drawable/bt_uisquare"
                     android:text="@string/btInscription"
                     android:textAllCaps="false"

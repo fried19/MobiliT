@@ -11,7 +11,15 @@
     <style name="ProgressBarStyle">
         <item name="colorAccent">@color/colorProgressBar</item>
     </style>
+    <style name="ProgressBarStyle2">
+        <item name="colorAccent">@color/colorBlueTi</item>
+    </style>
 
+    <style name="AppTheme.RequireActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

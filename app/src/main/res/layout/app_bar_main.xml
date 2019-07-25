@@ -6,21 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="4dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        android:layout_height="?attr/actionBarSize">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:id="@+id/main"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
 
         <androidx.appcompat.widget.Toolbar
+            app:title="Rechercher"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <!--app:titleTextColor="@color/colorBlack"-->
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_main" />
+    </androidx.cardview.widget.CardView>
+    <include layout="@layout/activity_maps" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

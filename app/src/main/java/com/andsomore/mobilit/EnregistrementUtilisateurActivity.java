@@ -1,30 +1,30 @@
 package com.andsomore.mobilit;
 
+import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.andsomore.mobilit.MainActivity;
+
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
-import com.andsomore.mobilit.idao.IConnected;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import dmax.dialog.SpotsDialog;
 
 public class EnregistrementUtilisateurActivity extends AppCompatActivity implements View.OnClickListener {
     //Declaration des composants
@@ -33,9 +33,8 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
     private EditText etNom,etPrenom,etTelephone,etEmail,etPassword,etRepassword;
     private Spinner spTypeUtilisateur;
     private Button btInscription;
-    private View content;
-    private ProgressDialog progressDialog;
-
+    private AlertDialog alertDialog;
+    private CoordinatorLayout main;
 
 
     @Override
@@ -65,9 +64,8 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
         btInscription=findViewById(R.id.btInscription);
         rlayout     = findViewById(R.id.rlayout);
         animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
-
-        progressDialog=new ProgressDialog(this);
-
+        alertDialog = new SpotsDialog(this);
+        main=findViewById(R.id.main);
     }
 
     //Methode de retour à l'activite precedante
@@ -83,6 +81,7 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
 
     @Override
     public void onClick(View view) {
+        InitViews();
         String Nom=etNom.getText().toString();
         String Prenom=etPrenom.getText().toString();
         String Telephone=(etTelephone.getText().toString());
@@ -103,14 +102,15 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
             }else {
                 Utilisateur utilisateur=new Utilisateur(Nom,Prenom,Telephone,Email,Pswd,TypeCompte);
                 TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
-                progressDialog.setMessage("Enrégistrement en cour...");
-                progressDialog.show();
+                alertDialog.show();
+                alertDialog.setMessage("Enrégistrement en cour...");
 
                 traitementUtilisateur.creerCompte(utilisateur, ok -> {
                     if(ok){
                         startActivity( new Intent(this, MainActivity.class));
-                        //Snackbar.make(main,"Vous êtes maintenant inscrit sur rnotre plateforme!! ",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(main,"Vous êtes maintenant inscrit sur rnotre plateforme!! ",Snackbar.LENGTH_SHORT).show();
                     }else {
+                        alertDialog.dismiss();
                         Toast.makeText(this,"Erreur!!Veuillez revérifier les données saisies",Toast.LENGTH_LONG).show();
                         etNom.requestFocus();
 
@@ -179,7 +179,7 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
             etPrenom.setError("Veuillez saisir le prenom");
         }else if(TextUtils.isEmpty(etTelephone.getText().toString())){
             etTelephone.requestFocus();
-            etTelephone.setError("Veuiller saisir le numero téléphonique le mail");
+            etTelephone.setError("Veuiller saisir le numero téléphonique ");
         }
         else if(TextUtils.isEmpty(etEmail.getText().toString())){
             etEmail.requestFocus();

@@ -1,5 +1,7 @@
 package com.andsomore.mobilit.entite;
 
+import org.json.JSONObject;
+
 public class InfoTransport {
     private int NombreTransport;
     private String Jour;

@@ -2,9 +2,8 @@ package com.andsomore.mobilit;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityOptions;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
-import com.andsomore.mobilit.idao.IConnected;
+
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import dmax.dialog.SpotsDialog;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvLogin, tvRegister;
     private Button btConnexion,btShowPassword;
     private EditText etEmail,etPassword;
-    private ProgressDialog progressDialog;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +66,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etPassword = findViewById(R.id.etPassword);
         btShowPassword = findViewById(R.id.showPassword);
         btConnexion = findViewById(R.id.btConnexion);
-        progressDialog=new ProgressDialog(this);
+        alertDialog =new SpotsDialog(this);
     }
 
     //Animation au chargement de l'activite
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
+        InitViews();
         if ((v == btRegister)||(v == tvRegister) ) {
             Intent intent = new Intent(LoginActivity.this, EnregistrementUtilisateurActivity.class);
             Pair[] pairs = new Pair[1];
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //Methode qui se declanche dès un click sur le boutton Connexion
         if(v==btConnexion){
+
             String Email=etEmail.getText().toString();
             String Password=etPassword.getText().toString();
             if(isEmpty()){
@@ -95,16 +97,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else {
                     Utilisateur utilisateur=new Utilisateur(Email,Password);
                     TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
-                    progressDialog.setMessage("Connexion en cour...");
-                    progressDialog.show();
 
+                    alertDialog.show();
+                    alertDialog.setMessage("Connexion en cour...");
                     traitementUtilisateur.seConnecter(utilisateur, ok -> {
 
                         if(ok){
-                            startActivity(new Intent(this, MainActivity.class));
-                            finish();
+                            startActivity(new Intent(this, PaygatePayementPageActivity.class));
+                            //finish();
                         }else {
-                            progressDialog.cancel();
+                            alertDialog.dismiss();
                             Toast.makeText(this, "L'email et/ou le mot de passes " +
                                     "ne figurent pas dans la base de données", Toast.LENGTH_SHORT).show();
                         }
