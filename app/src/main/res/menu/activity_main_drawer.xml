@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    tools:ignore="MissingDefaultResource">
 
     <group android:checkableBehavior="single">
         <item
@@ -20,6 +21,11 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/reservation"
+            android:icon="@drawable/ic_reservation"
+            android:title="@string/menu_reservation" />
+
     </group>
 
     <item android:title="Communicate">

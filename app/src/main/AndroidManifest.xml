@@ -15,11 +15,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".Singleton.ApplicationContext"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaygatePayementPageActivity"
-                  android:theme="@style/AppTheme.RequireActionBar"
-                  android:parentActivityName=".MainActivity"/>
-
+        <activity
+            android:name=".ReservationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".PaygatePayementPageActivity"
+            android:theme="@style/AppTheme.RequireActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,6 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

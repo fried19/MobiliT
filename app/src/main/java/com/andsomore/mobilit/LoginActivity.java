@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
+import com.andsomore.mobilit.idao.IConnected;
 
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -102,12 +104,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     alertDialog.setMessage("Connexion en cour...");
                     traitementUtilisateur.seConnecter(utilisateur, ok -> {
 
-                        if(ok){
-                            startActivity(new Intent(this, PaygatePayementPageActivity.class));
+                        if (ok) {
+                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             //finish();
-                        }else {
+                        } else {
                             alertDialog.dismiss();
-                            Toast.makeText(this, "L'email et/ou le mot de passes " +
+                            Toast.makeText(LoginActivity.this, "L'email et/ou le mot de passes " +
                                     "ne figurent pas dans la base de données", Toast.LENGTH_SHORT).show();
                         }
 
@@ -128,6 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else if(TextUtils.isEmpty(etEmail.getText().toString())){
             etEmail.requestFocus();
             etEmail.setError("Veuiller saisir le mail");
+
 
         }else if(TextUtils.isEmpty(etPassword.getText().toString())){
             etPassword.requestFocus();

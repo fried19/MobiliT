@@ -2,20 +2,21 @@ package com.andsomore.mobilit.entite;
 
 public class Vehicule {
     private static int Id=1;
-    private String Immatriculation;
-    private String NomBapteme;
-    private int NombrePlace;
-    private String Etat;
+    private String immatriculation;
+    private String nomBapteme;
+    private int placeTotale;
+    private int placeDisponible;
+    private String etat;
     private double Longitude;
     private double Latitude;
 
     public Vehicule(){}
     public Vehicule( String immatriculation, String nomBapteme, int nombrePlace, String etat, double longitude, double latitude) {
         Id ++;
-        Immatriculation = immatriculation;
-        NomBapteme = nomBapteme;
-        NombrePlace = nombrePlace;
-        Etat = etat;
+        this.immatriculation = immatriculation;
+        this.nomBapteme = nomBapteme;
+        this.placeTotale = nombrePlace;
+        this.etat = etat;
         Longitude = longitude;
         Latitude = latitude;
     }
@@ -29,35 +30,43 @@ public class Vehicule {
     }
 
     public String getImmatriculation() {
-        return Immatriculation;
+        return immatriculation;
     }
 
     public void setImmatriculation(String immatriculation) {
-        Immatriculation = immatriculation;
+        this.immatriculation = immatriculation;
+    }
+
+    public int getPlaceDisponible() {
+        return placeDisponible;
+    }
+
+    public void setPlaceDisponible(int placeDisponible) {
+        this.placeDisponible = placeDisponible;
     }
 
     public String getNomBapteme() {
-        return NomBapteme;
+        return nomBapteme;
     }
 
     public void setNomBapteme(String nomBapteme) {
-        NomBapteme = nomBapteme;
+        this.nomBapteme = nomBapteme;
     }
 
-    public int getNombrePlace() {
-        return NombrePlace;
+    public int getPlaceTotale() {
+        return placeTotale;
     }
 
-    public void setNombrePlace(int nombrePlace) {
-        NombrePlace = nombrePlace;
+    public void setPlaceTotale(int placeTotale) {
+        this.placeTotale = placeTotale;
     }
 
     public String getEtat() {
-        return Etat;
+        return etat;
     }
 
     public void setEtat(String etat) {
-        Etat = etat;
+        this.etat = etat;
     }
 
     public double getLongitude() {

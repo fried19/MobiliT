@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:focusableInTouchMode="true"
     android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="VectorDrawableCompat"
+    tools:ignore="MissingDefaultResource,VectorDrawableCompat"
     tools:context=".WelcomeActivity">
 
     <androidx.appcompat.widget.Toolbar

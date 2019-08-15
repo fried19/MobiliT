@@ -12,12 +12,21 @@
     <string name="tvTelephone">Télephone</string>
     <string name="tvInscription">Inscription</string>
     <string name="btInscription">S\'inscrire</string>
-
     <string name="choixTypeCompte">Choisissez le type de compte</string>
     <string-array name="typeCompte">
         <item>Client</item>
         <item>Chauffeur</item>
     </string-array>
+
+    <string-array name="ville">
+        <item>Lomé</item>
+        <item>Atakpamé</item>
+        <item>Sokodé</item>
+        <item>Kara</item>
+        <item>Dapaong</item>
+    </string-array>
+
+
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -25,6 +34,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_actualiser">Actualiser la page</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -32,6 +42,13 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="menu_reservation">Reservation</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_reservation">ReservationActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="btquitter">QUITTER</string>
+    <string name="BtTerminer">TERMINER</string>
+    <string name="LibelleVoyage">Voyage sur :</string>
 
 </resources>

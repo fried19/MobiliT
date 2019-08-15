@@ -34,7 +34,7 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
     private Spinner spTypeUtilisateur;
     private Button btInscription;
     private AlertDialog alertDialog;
-    private CoordinatorLayout main;
+
 
 
     @Override
@@ -65,7 +65,7 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
         rlayout     = findViewById(R.id.rlayout);
         animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
         alertDialog = new SpotsDialog(this);
-        main=findViewById(R.id.main);
+
     }
 
     //Methode de retour à l'activite precedante
@@ -108,7 +108,8 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
                 traitementUtilisateur.creerCompte(utilisateur, ok -> {
                     if(ok){
                         startActivity( new Intent(this, MainActivity.class));
-                        Snackbar.make(main,"Vous êtes maintenant inscrit sur rnotre plateforme!! ",Snackbar.LENGTH_SHORT).show();
+                        View main=findViewById(R.id.map);
+                        Snackbar.make(main,"Vous êtes maintenant inscrit sur notre plateforme!! ",Snackbar.LENGTH_SHORT).show();
                     }else {
                         alertDialog.dismiss();
                         Toast.makeText(this,"Erreur!!Veuillez revérifier les données saisies",Toast.LENGTH_LONG).show();

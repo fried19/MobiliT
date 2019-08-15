@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
+    android:gravity="center"
     android:focusableInTouchMode="true"
     tools:context=".EnregistrementUtilisateurActivity">
 
@@ -51,15 +52,13 @@
     <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="707dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="-5dp">
+            android:layout_gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv"
@@ -71,8 +70,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="645dp"
-                    android:layout_marginTop="-5dp">
+                    android:layout_height="667dp"
+                    android:layout_marginBottom="-5dp">
 
                     <TextView
                         android:id="@+id/tvNom"
@@ -259,9 +258,8 @@
                     android:id="@+id/btInscription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="-1dp"
-                    android:layout_margin="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
                     android:background="@drawable/bt_uisquare"
                     android:text="@string/btInscription"
                     android:textAllCaps="false"

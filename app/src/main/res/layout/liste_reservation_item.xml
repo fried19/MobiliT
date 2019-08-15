@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@color/colorLayoutBack"
+    app:cardBackgroundColor="@color/colorGree">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/colorBlueTi">
+
+            <TextView
+                android:id="@+id/tvDateReservation"
+                android:layout_width="155dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/colorWhite"
+                android:text="Date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cvDate"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/LibelleVoyage"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvLieuVoyage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/cvDate"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dp"
+            android:text="..."
+            android:textColor="@color/colorSplashText" />
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLieuVoyage"
+            android:layout_alignParentStart="true"
+            android:text="Jour prévu de voyage :"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvJourVoyage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="145dp"
+            android:layout_below="@+id/tvLieuVoyage"
+            android:text="..."
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvJourVoyage"
+            android:layout_alignParentStart="true"
+            android:text="Nom du bus :"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvNomBus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="85dp"
+            android:layout_below="@+id/tvJourVoyage"
+            android:text="..."
+            android:textColor="@color/colorSplashText" />
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNomBus"
+            android:layout_alignParentStart="true"
+            android:text="Numero du siège :"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvNumPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNomBus"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="2dp"
+            android:text="..."
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNumPlace"
+            android:layout_alignParentStart="true"
+            android:text="Paiement par :"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvModePaiement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNumPlace"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="2dp"
+            android:text="..."
+            android:textColor="@color/colorSplashText" />
+<!--Pour le paiement reussi-->
+        <TextView
+            android:id="@+id/tvIcSucces"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="255dp"
+            android:visibility="invisible"
+            android:drawableLeft="@drawable/ic_paiement_succes"
+            android:text="3700"
+            android:textColor="@color/colorGreen"
+            android:textSize="23dp" />
+
+        <TextView
+            android:id="@+id/tvPaiementSucces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_marginStart="260dp"
+            android:layout_below="@+id/tvIcSucces"
+            android:text="Paiement réussi"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvDeviseSucces"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="360dp"
+            android:visibility="invisible"
+            android:text="F"
+            android:textSize="23dp"
+            android:textColor="@color/colorPartialGreen" />
+
+<!--Pour le paiement en cours-->
+
+        <TextView
+            android:id="@+id/tvIcEnCours"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="255dp"
+            android:visibility="invisible"
+            android:drawableLeft="@drawable/ic_paiement_encours"
+            android:text="3700"
+            android:textColor="@color/colorPartialGreen"
+            android:textSize="23dp"  />
+
+        <TextView
+            android:id="@+id/tvPaiementEnCours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_marginStart="260dp"
+            android:layout_below="@+id/tvIcEnCours"
+            android:text="Paiement en cours"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvDeviseEnCours"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_marginStart="360dp"
+            android:text="F"
+            android:textSize="23dp"
+            android:textColor="@color/colorPartialGreen"/>
+
+<!--Pour le paiement expiré-->
+
+        <TextView
+            android:id="@+id/tvIcExpire"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_marginStart="255dp"
+            android:drawableLeft="@drawable/ic_paiement_expire"
+            android:text="3700"
+            android:textColor="@color/colorYellow"
+            android:textSize="23dp" />
+
+        <TextView
+            android:id="@+id/tvPaiementExpire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible"
+            android:layout_marginStart="260dp"
+            android:layout_below="@+id/tvIcExpire"
+            android:text="Paiement expiré"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvDeviseExpire"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="360dp"
+            android:visibility="invisible"
+            android:text="F"
+            android:textSize="23dp"
+            android:textColor="@color/colorYellow" />
+
+<!--Pour le paiement annulé-->
+
+        <TextView
+            android:id="@+id/tvIcAnnule"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="255dp"
+            android:visibility="invisible"
+            android:drawableLeft="@drawable/ic_paiement_annule"
+            android:text="3700"
+            android:textColor="@color/colorButtonRed"
+            android:textSize="23dp"/>
+
+        <TextView
+            android:id="@+id/tvPaiementAnnule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="260dp"
+            android:layout_below="@+id/tvIcAnnule"
+            android:visibility="invisible"
+            android:text="Paiement Annulé"
+            android:textColor="@color/colorSplashText" />
+
+        <TextView
+            android:id="@+id/tvDeviseAnnule"
+            android:layout_width="93dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="360dp"
+            android:visibility="invisible"
+            android:text="F"
+            android:textSize="23dp"
+            android:textColor="@color/colorButtonRed"/>
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>
+

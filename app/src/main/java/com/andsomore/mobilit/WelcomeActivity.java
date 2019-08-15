@@ -23,7 +23,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(1000, 1000) {
 
             @Override
             public void onFinish() {
@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(GONE);
                 busImageView.setVisibility(GONE);
 
-                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, ReservationActivity.class));
                 finish();
 
             }

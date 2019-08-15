@@ -1,5 +1,7 @@
 package com.andsomore.mobilit;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,6 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -24,9 +27,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
     private GoogleMap mMap;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fab;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         mapFragment.getMapAsync(this);
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        String nom=preferences.getString("Nom","Nom defini");
+        Toast.makeText(this, "Nom: "+nom, Toast.LENGTH_SHORT).show();
     }
 
     public void InitViews(){
@@ -87,8 +95,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_send) {
 
+        }else if(id == R.id.reservation){
+            startActivity(new Intent(this,ReservationActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

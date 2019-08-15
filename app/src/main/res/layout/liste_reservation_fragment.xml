@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listReservation"
+    android:background="@color/colorLayoutBack"
+    tools:ignore="MissingDefaultResource">
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvReservation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+</androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tvItemEmpty"
+        android:layout_width="333dp"
+        android:layout_height="76dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="RIEN A AFFICHER"
+        android:textSize="40dp"
+        android:visibility="invisible" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
