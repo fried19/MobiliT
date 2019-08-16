@@ -1,7 +1,10 @@
 package com.andsomore.mobilit.dao;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
@@ -21,15 +24,20 @@ import com.andsomore.mobilit.Singleton.VolleySingleton;
 import com.andsomore.mobilit.entite.Reservation;
 import com.andsomore.mobilit.entite.Utilisateur;
 import com.andsomore.mobilit.idao.IClient;
+import com.andsomore.mobilit.idao.IGenplace;
 import com.andsomore.mobilit.idao.IResult;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
@@ -43,7 +51,9 @@ import static android.content.ContentValues.TAG;
 public class TraitementClient implements IClient<Reservation> {
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private CollectionReference reservationRef=db.collection("RESERVATION");
+    private CollectionReference vehiculeRef=db.collection("VEHICULE");
     private ListeReservationAdapter adapter;
+    private SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(ApplicationContext.getAppContext());
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -88,6 +98,7 @@ public class TraitementClient implements IClient<Reservation> {
                          reservation.setCodeRef("...");
                          reservation.setDateReservation(null);
                          reservation.setEtatPaiement("Annulé");
+
                      }
 
                  }catch (Exception e){
@@ -104,17 +115,116 @@ public class TraitementClient implements IClient<Reservation> {
                         Log.e(TAG, "Erreur : ", e);
                     });
 
-        }, error -> {
-
-        });
+        }, error -> Log.e(TAG, "Erreur Volley:  ", error));
         queue.add(request);
     }
 
 
+public void updateReservation(){
+        String numTel=preferences.getString("Telephone","non defini");
+        reservationRef
+                .whereEqualTo("numTelephone",numTel)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            String idClient=document.getString("idClient");
+                            String villeDepart=document.getString("villeDepart");
+                            String idReservation=document.getId();
+                            String villeArrivee=document.getString("villeArrivee") ;
+                            int firePlace =document.getLong("numPlace").intValue();
+
+             //Requete Json pour vérifier l'état du paiement et mettre à jour la reservation du client
+
+                            RequestQueue queue= VolleySingleton.getInstance(ApplicationContext.getAppContext()).getRequestQueue();
+                            String auth_token= ApplicationContext.Token;
+                            String identifier=idClient;
+                            String url="https://paygateglobal.com/api/v2/status";
+                            Map<String, String> params = new HashMap();
+                            try {
+                                params.put("auth_token", auth_token);
+                                params.put("identifier", identifier);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+                            JSONObject parameters = new JSONObject(params);
+                            JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+
+                                try {
+                                    String status=response.getString("status");
+                                    if(status.contains("0") && firePlace == 0){
+
+                                        genererPlace(villeDepart,villeArrivee, (nomBus, numPlace) -> reservationRef
+                                                .document(idReservation)
+                                                .update("nomBus",nomBus,"numPlace",numPlace,"etatPaiement","Validé")
+                                                .addOnSuccessListener(aVoid -> {
+
+                                                })
+                                                .addOnFailureListener(e -> e.printStackTrace()));
+
+
+                                    }
+
+
+                                } catch (Exception e) {
+
+                                    e.printStackTrace();
+                                }
+
+                            }, error -> error.printStackTrace());
+
+                            queue.add(request);
 
 
 
 
+                        }
+
+
+
+
+                    }
+                });
+}
+
+
+public void genererPlace(String villeDepart, String villeArrivee, IGenplace genplace){
+        String direction=villeDepart+"-"+villeArrivee;
+
+        vehiculeRef
+                .whereEqualTo("direction",direction)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            int placeTotale,placeDisponible,numPlace;
+                            String idVehicule,nomBus;
+                            placeTotale=document.getLong("placeTotale").intValue();
+                            placeDisponible=document.getLong("placeDisponible").intValue();
+                            idVehicule=document.getId();
+                            nomBus=document.getString("nomBapteme");
+                            if(placeDisponible != 0){
+                                numPlace=placeTotale-(placeDisponible) +1;
+                                genplace.getPlace(nomBus,numPlace);
+                                placeDisponible--;
+                                vehiculeRef
+                                        .document(idVehicule)
+                                        .update("placeDisponible",placeDisponible)
+                                        .addOnSuccessListener(aVoid -> { })
+                                        .addOnFailureListener(e -> e.printStackTrace());
+                            }
+
+                        }
+                    } else {
+                        Log.e(TAG, "Euureur:  ", task.getException());
+                    }
+                });
+
+
+}
 
 
 

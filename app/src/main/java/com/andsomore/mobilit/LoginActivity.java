@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (ok) {
                             LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            //finish();
+                            finish();
                         } else {
                             alertDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "L'email et/ou le mot de passes " +

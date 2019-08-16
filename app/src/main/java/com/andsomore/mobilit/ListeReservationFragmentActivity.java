@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andsomore.mobilit.dao.TraitementClient;
 import com.andsomore.mobilit.entite.Reservation;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class ListeReservationFragmentActivity extends Fragment {
           view=inflater.inflate(R.layout.liste_reservation_fragment,container,false);
           setHasOptionsMenu(true);
           InitView();
+          new TraitementClient().updateReservation();
           setUpRecyclerView(((ReservationActivity)getActivity()).getnumTelephone());
 //          ((ReservationActivity)getActivity()).getnumTelephone();
           return view;
@@ -60,7 +62,8 @@ public class ListeReservationFragmentActivity extends Fragment {
 
     protected void setUpRecyclerView(String numTel) {
 
-            Query query = reservationRef.whereEqualTo("numTelephone","70122540");
+            Query query = reservationRef.whereEqualTo("numTelephone",numTel)
+                    .orderBy("dateReservation", Query.Direction.DESCENDING);
 
             FirestoreRecyclerOptions<Reservation> options=new FirestoreRecyclerOptions.Builder<Reservation>()
                     .setQuery(query,Reservation.class)
@@ -126,6 +129,7 @@ public class ListeReservationFragmentActivity extends Fragment {
         adapter.stopListening();
 
     }
+
 
 
 }

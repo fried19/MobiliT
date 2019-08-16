@@ -139,6 +139,7 @@ public class PaygatePayementPageActivity extends AppCompatActivity implements Vi
             intent.putExtra("idClient",identifiant);
             setResult(RESULT_OK,intent);
             finish();
+
         }
 
         if(view==btQuitter){

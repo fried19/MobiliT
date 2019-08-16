@@ -3,6 +3,7 @@ package com.andsomore.mobilit;
 
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 
 import com.andsomore.mobilit.dao.TraitementClient;
+import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Reservation;
 import com.andsomore.mobilit.idao.IResult;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,6 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import dmax.dialog.SpotsDialog;
 
 import static android.content.ContentValues.TAG;
 
@@ -52,6 +56,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     private String villeArrivee;
     private String dateVoyage;
     private int amount;
+    private AlertDialog alertDialog;
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
     private CollectionReference vehiculeRef=db.collection("VEHICULE");
 
@@ -89,6 +94,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     spvilleDepart=view.findViewById(R.id.spDepart);
     spvilleArrive=view.findViewById(R.id.spArrive);
     tvMontant=view.findViewById(R.id.tvMontant);
+    alertDialog=new SpotsDialog(getActivity());
 
 
 }
@@ -130,6 +136,10 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
                      if(ok){
                          ((ReservationActivity)getActivity()).onRefresh();
                          ((ReservationActivity)getActivity()).navigateFragment(1);
+                         alertDialog.show();
+                         alertDialog.setMessage("Actualisation...");
+                         new TraitementClient().updateReservation();
+                         alertDialog.dismiss();
                          View view=getActivity().findViewById(R.id.listReservation);
                          Snackbar.make(view,"Veuillez consulter vos réservation ici",Snackbar.LENGTH_LONG).show();
                      }else {
@@ -185,14 +195,17 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
                 tvDate.setTextColor(Color.RED);
             }else {
 
-                verifierPlaceDispo(villeDepart, villeArrivee, ok -> {
-                    if(ok){
-                        Intent intent = new Intent(getActivity(),PaygatePayementPageActivity.class );
-                        //Envoie du montant
-                        intent.putExtra("amount",amount);
-                        startActivityForResult(intent, PAYGATE_ACTIVITY_REQUEST_CODE);
-                    }else
-                        Toast.makeText(getActivity(),"Il n'y a plus de place disponible pour ce voyage.Veuillez payer votre billet pour le lendemain",Toast.LENGTH_LONG).show();
+                verifierPlaceDispo(villeDepart, villeArrivee, new IResult() {
+                    @Override
+                    public void getResult(boolean ok) {
+                        if (ok) {
+                            Intent intent = new Intent(NewReservationFragmentActivity.this.getActivity(), PaygatePayementPageActivity.class);
+                            //Envoie du montant
+                            intent.putExtra("amount", amount);
+                            NewReservationFragmentActivity.this.startActivityForResult(intent, PAYGATE_ACTIVITY_REQUEST_CODE);
+                        } else
+                            Toast.makeText(NewReservationFragmentActivity.this.getActivity(), "Il n'y a plus de place disponible pour ce voyage.Veuillez payer votre billet pour le lendemain", Toast.LENGTH_LONG).show();
+                    }
                 });
 
 

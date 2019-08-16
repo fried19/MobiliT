@@ -103,15 +103,17 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
     @Override
     protected void onBindViewHolder(@NonNull ReservationHolder holder, int i, @NonNull Reservation reservation) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE dd MMMM yyyy",new Locale("fr","FR"));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy HH:mm",new Locale("fr","FR"));
+        SimpleDateFormat formatter1=new SimpleDateFormat("EEEE dd MMMM yyyy",new Locale("fr","FR"));
 
         try {
             if((reservation.getJourVoyage() != null) && (reservation.getDateReservation()== null)){
-                holder.tvDatereservation.setText("...");
+                String jourVoyage=formatter1.format(reservation.getJourVoyage());
+                holder.tvJourvoyage.setText(jourVoyage);
 
             }else if((reservation.getJourVoyage() != null) && (reservation.getDateReservation() != null)){
                 String dateReservation = formatter.format(reservation.getDateReservation());
-                String jourVoyage=formatter.format(reservation.getJourVoyage());//catch exception
+                String jourVoyage=formatter1.format(reservation.getJourVoyage());//catch exception
                 holder.tvDatereservation.setText(dateReservation);
                 holder.tvJourvoyage.setText(jourVoyage);
             }
@@ -124,15 +126,23 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
 
 
          holder.tvLieuvoyage.setText(String.format("%s-%s", reservation.getVilleDepart(), reservation.getVilleArrivee()));
-         holder.tvNombus.setText(reservation.getNomBus());
+        if(reservation.getNomBus() == null){
+            holder.tvNombus.setText("...");
+
+        }else
+            holder.tvNombus.setText(reservation.getNomBus());
+
          if((reservation.getJourVoyage() != null) &&(reservation.getCodeRef() !=null )){
 
              holder.tvModepaiement.setText(reservation.getModePaiement()+",  codeRef : "+reservation.getCodeRef());
          }else if((reservation.getJourVoyage() != null) &&(reservation.getCodeRef() ==null )){
              holder.tvModepaiement.setText(reservation.getModePaiement()+",  codeRef : ... ");
          }
+         if(reservation.getNumPlace() == 0 ){
 
-        holder.tvNumplacebus.setText(Integer.toString(reservation.getNumPlace()));
+             holder.tvNumplacebus.setText("...");
+         }else
+           holder.tvNumplacebus.setText(Integer.toString(reservation.getNumPlace()));
 
 
          if(reservation.getEtatPaiement().equals("Validé")){

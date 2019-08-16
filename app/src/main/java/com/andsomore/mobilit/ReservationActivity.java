@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.andsomore.mobilit.dao.TraitementClient;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -103,7 +104,7 @@ public class ReservationActivity extends AppCompatActivity implements SwipeRefre
                 case 1:
                     ListeReservationFragmentActivity fragmentL=(ListeReservationFragmentActivity) page;
                     if (fragmentL != null) {
-                        fragmentL.setUpRecyclerView(getnumTelephone());
+                        new TraitementClient().updateReservation();
                     }
                     srReservation.setRefreshing(false);
                     break;
