@@ -50,20 +50,22 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
 
     private View view;
     private Button btReservation;
-    private TextView tvDate,tvMontant;
+    private TextView tvDate, tvMontant;
     private Calendar calendar;
-    private DatePickerDialog datePickerDialog ;
+    private DatePickerDialog datePickerDialog;
     private int Year, Month, Day;
-    private Spinner spvilleDepart,spvilleArrive;
+    private Spinner spvilleDepart, spvilleArrive;
     private String villeDepart;
     private String villeArrivee;
     private String dateVoyage;
+    private Date date;
     private int amount;
     private AlertDialog alertDialog;
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
-    private CollectionReference vehiculeRef=db.collection("VEHICULE");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference vehiculeRef = db.collection("VEHICULE");
 
     private static final int PAYGATE_ACTIVITY_REQUEST_CODE = 0;
+
     //Initialisation de la vue
     public NewReservationFragmentActivity() {
 
@@ -72,7 +74,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.new_reservation_fragment,container,false);
+        view = inflater.inflate(R.layout.new_reservation_fragment, container, false);
         setHasOptionsMenu(true);
         InitViews();
         tvDate.setOnClickListener(this);
@@ -91,21 +93,20 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
 
     }
 
-    protected void InitViews(){
-    btReservation =view.findViewById(R.id.btReservation);
-    tvDate=view.findViewById(R.id.tvDate);
-    spvilleDepart=view.findViewById(R.id.spDepart);
-    spvilleArrive=view.findViewById(R.id.spArrive);
-    tvMontant=view.findViewById(R.id.tvMontant);
-    alertDialog=new SpotsDialog(getActivity());
-    calendar = Calendar.getInstance();
-    Year = calendar.get(Calendar.YEAR) ;
-    Month = calendar.get(Calendar.MONTH);
-    Day = calendar.get(Calendar.DAY_OF_MONTH);
+    protected void InitViews() {
+        btReservation = view.findViewById(R.id.btReservation);
+        tvDate = view.findViewById(R.id.tvDate);
+        spvilleDepart = view.findViewById(R.id.spDepart);
+        spvilleArrive = view.findViewById(R.id.spArrive);
+        tvMontant = view.findViewById(R.id.tvMontant);
+        alertDialog = new SpotsDialog(getActivity());
+        calendar = Calendar.getInstance();
+        Year = calendar.get(Calendar.YEAR);
+        Month = calendar.get(Calendar.MONTH);
+        Day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-
-}
+    }
 
     @TargetApi(Build.VERSION_CODES.N)
     @Override
@@ -114,53 +115,53 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
 
         if (requestCode == PAYGATE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
-                 //refreshPage();
+                //refreshPage();
                 //Récupération de l'id généré pour le paiement du client
-                 String idClient=data.getStringExtra("idClient");
-                 Reservation reservation=new Reservation();
-                 reservation.setVilleDepart(villeDepart);
-                 reservation.setVilleArrivee(villeArrivee);
-                 reservation.setNomBus("...");
-                 //Conversion de la date de reservation
-                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",new Locale("fr","FR"));
+                String idClient = data.getStringExtra("idClient");
+                Reservation reservation = new Reservation();
+                reservation.setVilleDepart(villeDepart);
+                reservation.setVilleArrivee(villeArrivee);
+                reservation.setNomBus("...");
+                //Conversion de la date de reservation
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("fr", "FR"));
 
-                 try {
-                     Date  date = formatter.parse(dateVoyage);//catch exception
-                     reservation.setJourVoyage(date);
-                 } catch (ParseException e) {
+                try {
+                    date = formatter.parse(dateVoyage);//catch exception
+                    reservation.setJourVoyage(date);
+                } catch (ParseException e) {
 
-                     e.printStackTrace();
-                 }
+                    e.printStackTrace();
+                }
                 //récupération de la date  (au format mardi 13 août 2019 par ex)
 
 //                 reservation.setEtatPaiement("...");
 //                 reservation.setModePaiement("...");
-                 reservation.setIdClient(idClient);
-                 reservation.setAmount(amount);
-                 reservation.setNumTelephone(((ReservationActivity)getActivity()).getnumTelephone());
+                reservation.setIdClient(idClient);
+                reservation.setAmount(amount);
+                reservation.setNumTelephone(((ReservationActivity) getActivity()).getnumTelephone());
 //                 reservation.setCodeRef(0);
-                 TraitementClient client=new TraitementClient();
-                 client.acheterBillet(reservation, ok -> {
-                     if(ok){
-                         ((ReservationActivity)getActivity()).onRefresh();
-                         ((ReservationActivity)getActivity()).navigateFragment(1);
-                         alertDialog.show();
-                         alertDialog.setMessage("Actualisation...");
-                         new TraitementClient().updateReservation();
-                         alertDialog.dismiss();
-                         View view=getActivity().findViewById(R.id.listReservation);
-                         Snackbar.make(view,"Veuillez consulter vos réservation ici",Snackbar.LENGTH_LONG).show();
-                     }else {
-                         View view=getActivity().findViewById(R.id.newReservation);
-                         Snackbar.make(view,"La réservation n'as pas été effectuée.Veuillez ressayer.",Snackbar.LENGTH_SHORT).show();
-                     }
+                TraitementClient client = new TraitementClient();
+                client.acheterBillet(reservation, ok -> {
+                    if (ok) {
+                        ((ReservationActivity) getActivity()).onRefresh();
+                        ((ReservationActivity) getActivity()).navigateFragment(1);
+                        alertDialog.show();
+                        alertDialog.setMessage("Actualisation...");
+                        new TraitementClient().updateReservation();
+                        alertDialog.dismiss();
+                        View view = getActivity().findViewById(R.id.listReservation);
+                        Snackbar.make(view, "Veuillez consulter vos réservation ici", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        View view = getActivity().findViewById(R.id.newReservation);
+                        Snackbar.make(view, "La réservation n'as pas été effectuée.Veuillez ressayer.", Snackbar.LENGTH_SHORT).show();
+                    }
 
-                 });
+                });
 
 
-            }else if(requestCode == getActivity().RESULT_CANCELED){
-                 View view=getActivity().findViewById(R.id.newReservation);
-                 Snackbar.make(view,"Le paiement n'as pas été effectué",Snackbar.LENGTH_LONG).show();
+            } else if (requestCode == getActivity().RESULT_CANCELED) {
+                View view = getActivity().findViewById(R.id.newReservation);
+                Snackbar.make(view, "Le paiement n'as pas été effectué", Snackbar.LENGTH_LONG).show();
             }
         }
 
@@ -171,7 +172,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     @Override
     public void onClick(View view) {
         //Popup calendrier
-        if(view==tvDate){
+        if (view == tvDate) {
 
 
             datePickerDialog = DatePickerDialog.newInstance(this, Year, Month, Day);
@@ -185,12 +186,10 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
             datePickerDialog.setMinDate(min_date_c);
 
 
-
             // Setting Max Date to next 2 years
             Calendar max_date_c = Calendar.getInstance();
-            max_date_c.set(Calendar.DATE,Day+6);
+            max_date_c.set(Calendar.DATE, Day + 6);
             datePickerDialog.setMaxDate(max_date_c);
-
 
 
             //Disable all SUNDAYS and SATURDAYS between Min and Max Dates
@@ -206,20 +205,20 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
             datePickerDialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
         }
 
-        if(view==btReservation){
+        if (view == btReservation) {
 
-            dateVoyage =tvDate.getText().toString();
-            amount=Integer.parseInt(tvMontant.getText().toString());
+            dateVoyage = tvDate.getText().toString();
+            amount = Integer.parseInt(tvMontant.getText().toString());
 
             //Affiche erreur si le deux villes sont équivalentes
-            if(amount==0){
-                TextView errorText = (TextView)spvilleArrive.getSelectedView();
+            if (amount == 0) {
+                TextView errorText = (TextView) spvilleArrive.getSelectedView();
                 errorText.setError("");
                 errorText.setTextColor(Color.RED);
                 errorText.setText("Choisissez");
-            }else if(dateVoyage.equals("Choisissez")){
+            } else if (dateVoyage.equals("Choisissez")) {
                 tvDate.setTextColor(Color.RED);
-            }else {
+            } else {
 
                 verifierPlaceDispo(villeDepart, villeArrivee, new IResult() {
                     @Override
@@ -241,21 +240,21 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     }
 
     //Methode qui génère le montant en fonction des villes séléctionnées
-    private int genereMontant(String villeDepart,String villeArrivee){
-        int montant=0;
-        if(!villeDepart.equals(villeArrivee)){
-            if(((villeDepart.equals("Lomé"))&&(villeArrivee.equals("Atakpamé")))||
-                     ((villeDepart.equals("Atakpamé"))&&(villeArrivee.equals("Lomé")))){
-                        montant=2800;
-            }else if(((villeDepart.equals("Lomé"))&&(villeArrivee.equals("Sokodé")))||
-                     ((villeDepart.equals("Sokodé"))&&(villeArrivee.equals("Lomé")))){
-                        montant=5100;
-            }else if(((villeDepart.equals("Lomé"))&&(villeArrivee.equals("Kara")))||
-                     ((villeDepart.equals("Kara"))&&(villeArrivee.equalsIgnoreCase("Lomé")))){
-                        montant=5900;
-            }else if(((villeDepart.equals("Lomé"))&&(villeArrivee.equals("Dapaong")))||
-                     ((villeDepart.equals("Dapaong"))&&(villeArrivee.equals("Lomé")))){
-                        montant=8700;
+    private int genereMontant(String villeDepart, String villeArrivee) {
+        int montant = 0;
+        if (!villeDepart.equals(villeArrivee)) {
+            if (((villeDepart.equals("Lomé")) && (villeArrivee.equals("Atakpamé"))) ||
+                    ((villeDepart.equals("Atakpamé")) && (villeArrivee.equals("Lomé")))) {
+                montant = 2800;
+            } else if (((villeDepart.equals("Lomé")) && (villeArrivee.equals("Sokodé"))) ||
+                    ((villeDepart.equals("Sokodé")) && (villeArrivee.equals("Lomé")))) {
+                montant = 5100;
+            } else if (((villeDepart.equals("Lomé")) && (villeArrivee.equals("Kara"))) ||
+                    ((villeDepart.equals("Kara")) && (villeArrivee.equalsIgnoreCase("Lomé")))) {
+                montant = 5900;
+            } else if (((villeDepart.equals("Lomé")) && (villeArrivee.equals("Dapaong"))) ||
+                    ((villeDepart.equals("Dapaong")) && (villeArrivee.equals("Lomé")))) {
+                montant = 8700;
             }
         }
 
@@ -265,10 +264,10 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                villeDepart=spvilleDepart.getSelectedItem().toString();
-                villeArrivee=spvilleArrive.getSelectedItem().toString();
-                int Montant=genereMontant(villeDepart,villeArrivee);
-                tvMontant.setText(String.valueOf(Montant));
+        villeDepart = spvilleDepart.getSelectedItem().toString();
+        villeArrivee = spvilleArrive.getSelectedItem().toString();
+        int Montant = genereMontant(villeDepart, villeArrivee);
+        tvMontant.setText(String.valueOf(Montant));
 
     }
 
@@ -278,23 +277,22 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     }
 
 
-   //Actualiser la page
+    //Actualiser la page
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_actualiser){
-            ((ReservationActivity)getActivity()).setRefresh();
+        if (id == R.id.action_actualiser) {
+            ((ReservationActivity) getActivity()).setRefresh();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    protected void refreshPage() {
 
-    protected void refreshPage(){
-
-        spvilleDepart.setSelection(0,true);
-        spvilleArrive.setSelection(0,true);
+        spvilleDepart.setSelection(0, true);
+        spvilleArrive.setSelection(0, true);
         if (tvDate.getCurrentTextColor() == Color.RED) {
             tvDate.setTextColor(Color.BLACK);
         }
@@ -302,34 +300,57 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
         tvMontant.setText("0");
     }
 
-    private void verifierPlaceDispo(String villeDepart, String villeArrivee, IResult result){
-                String direction=villeDepart+"-"+villeArrivee;
-                vehiculeRef.whereEqualTo("direction",direction)
-                           .get()
-                           .addOnCompleteListener(task -> {
-                               if (task.isSuccessful()) {
-                                   for (QueryDocumentSnapshot document : task.getResult()) {
+    private void verifierPlaceDispo(String villeDepart, String villeArrivee, IResult result) {
+        String direction = villeDepart + "-" + villeArrivee;
+        vehiculeRef.whereEqualTo("direction", direction)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                       if((document.getLong("placeDisponible")).intValue() == 0){
+                            if ((document.getLong("placeDisponible")).intValue() == 0) {
 
-                                             result.getResult(false);
-                                       }else
-                                             result.getResult(true);
-                                   }
-                               } else {
-                                   Log.e(TAG,"Erreur: ",task.getException());
-                               }
-                           });
+
+                                result.getResult(false);
+                            } else
+                                result.getResult(true);
+                        }
+                    } else {
+                        Log.e(TAG, "Erreur: ", task.getException());
+                    }
+                });
 
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = Day+"/"+"0"+(Month+1)+"/"+Year;
+        String date = Day + "/" + "0" + (Month + 1) + "/" + Year;
         if (tvDate.getCurrentTextColor() == Color.RED) {
             tvDate.setTextColor(Color.BLACK);
         }
         tvDate.setText(date);
+
+    }
+
+    private int dayToint(String date) {
+        int value=0;
+        if (date.contains("dimanche")) {
+            value=1;
+        } else if (date.contains("lundi")) {
+            value=2;
+        } else if (date.contains("mardi")) {
+            value=3;
+        } else if (date.contains("mercredi")) {
+            value=4;
+        } else if (date.contains("jeudi")) {
+            value=5;
+        } else if (date.contains("vendredi")) {
+            value=6;
+        } else if (date.contains("samedi")){
+            value=7;
+        }
+
+        return value;
 
     }
 }
