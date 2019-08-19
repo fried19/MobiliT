@@ -69,7 +69,7 @@ public class ListeReservationFragmentActivity extends Fragment {
                     .setQuery(query,Reservation.class)
                     .build();
 
-        adapter = new ListeReservationAdapter(options);
+        adapter = new ListeReservationAdapter(options,getActivity());
         RecyclerView recyclerView=view.findViewById(R.id.rvReservation);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));

@@ -1,10 +1,15 @@
 package com.andsomore.mobilit;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -12,28 +17,27 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.entite.Reservation;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.ObservableSnapshotArray;
-import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservation, ListeReservationAdapter.ReservationHolder> {
     private final ObservableSnapshotArray<Reservation> Snapshots;
+    private SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(ApplicationContext.getAppContext());
+    private Context myContext;
 
-
-    public ListeReservationAdapter(@NonNull FirestoreRecyclerOptions<Reservation> options) {
+    public ListeReservationAdapter(@NonNull FirestoreRecyclerOptions<Reservation> options,Context context) {
         super(options);
         Snapshots = options.getSnapshots();
-
+        myContext=context;
         if (options.getOwner() != null) {
             options.getOwner().getLifecycle().addObserver(this);
         }
@@ -105,17 +109,20 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy HH:mm",new Locale("fr","FR"));
         SimpleDateFormat formatter1=new SimpleDateFormat("EEEE dd MMMM yyyy",new Locale("fr","FR"));
-
+        String jourVoyage;
+        Intent intent=new Intent(myContext, genererRecuReservation.class);
         try {
             if((reservation.getJourVoyage() != null) && (reservation.getDateReservation()== null)){
-                String jourVoyage=formatter1.format(reservation.getJourVoyage());
+                jourVoyage=formatter1.format(reservation.getJourVoyage());
                 holder.tvJourvoyage.setText(jourVoyage);
+                intent.putExtra("jourVoyage",jourVoyage);
 
             }else if((reservation.getJourVoyage() != null) && (reservation.getDateReservation() != null)){
                 String dateReservation = formatter.format(reservation.getDateReservation());
-                String jourVoyage=formatter1.format(reservation.getJourVoyage());//catch exception
+                jourVoyage=formatter1.format(reservation.getJourVoyage());//catch exception
                 holder.tvDatereservation.setText(dateReservation);
                 holder.tvJourvoyage.setText(jourVoyage);
+                intent.putExtra("jourVoyage",jourVoyage);
             }
 
 
@@ -143,6 +150,21 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
              holder.tvNumplacebus.setText("...");
          }else
            holder.tvNumplacebus.setText(Integer.toString(reservation.getNumPlace()));
+           intent.putExtra("numPlace",Integer.toString(reservation.getNumPlace()));
+
+         if(reservation.getEtatPaiement().equals("Validé")){
+             holder.tvRecu.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+
+                     intent.putExtra("Nom",preferences.getString("Nom","Non défini"));
+                     intent.putExtra("Prenom",preferences.getString("Prenom","Non défini"));
+                     myContext.startActivity(intent);
+                 }
+             });
+         }else {
+             Toast.makeText(myContext,"Veuillez valider d'abord votre paiement",Toast.LENGTH_SHORT).show();
+         }
 
 
          if(reservation.getEtatPaiement().equals("Validé")){
@@ -216,6 +238,8 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
         private TextView tvNombus;
         private TextView tvNumplacebus;
         private TextView tvModepaiement;
+        private TextView tvRecu;
+
 
 
         public ReservationHolder(@NonNull View itemView) {
@@ -236,6 +260,7 @@ public class ListeReservationAdapter extends FirestoreRecyclerAdapter<Reservatio
             tvNombus=itemView.findViewById(R.id.tvNomBus);
             tvNumplacebus=itemView.findViewById(R.id.tvNumPlace);
             tvModepaiement=itemView.findViewById(R.id.tvModePaiement);
+            tvRecu=itemView.findViewById(R.id.tvRecu);
             //Initialisation des TextView pour le montants
             tvicSucces=itemView.findViewById(R.id.tvIcSucces);
             tvicEncours=itemView.findViewById(R.id.tvIcEnCours);

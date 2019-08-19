@@ -1,43 +1,26 @@
 package com.andsomore.mobilit.dao;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.andsomore.mobilit.ListeReservationAdapter;
-import com.andsomore.mobilit.ReservationActivity;
 import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.Singleton.VolleySingleton;
 import com.andsomore.mobilit.entite.Reservation;
-import com.andsomore.mobilit.entite.Utilisateur;
 import com.andsomore.mobilit.idao.IClient;
 import com.andsomore.mobilit.idao.IGenplace;
 import com.andsomore.mobilit.idao.IResult;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
@@ -54,6 +37,7 @@ public class TraitementClient implements IClient<Reservation> {
     private CollectionReference vehiculeRef=db.collection("VEHICULE");
     private ListeReservationAdapter adapter;
     private SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(ApplicationContext.getAppContext());
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)

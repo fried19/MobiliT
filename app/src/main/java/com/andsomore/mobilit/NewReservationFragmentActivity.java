@@ -4,7 +4,8 @@ package com.andsomore.mobilit;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.MonthAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -25,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.dao.TraitementClient;
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Reservation;
@@ -44,13 +46,14 @@ import dmax.dialog.SpotsDialog;
 
 import static android.content.ContentValues.TAG;
 
-public class NewReservationFragmentActivity extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class NewReservationFragmentActivity extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
     private View view;
     private Button btReservation;
     private TextView tvDate,tvMontant;
     private Calendar calendar;
-    private DatePickerDialog datePick;
+    private DatePickerDialog datePickerDialog ;
+    private int Year, Month, Day;
     private Spinner spvilleDepart,spvilleArrive;
     private String villeDepart;
     private String villeArrivee;
@@ -95,6 +98,11 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     spvilleArrive=view.findViewById(R.id.spArrive);
     tvMontant=view.findViewById(R.id.tvMontant);
     alertDialog=new SpotsDialog(getActivity());
+    calendar = Calendar.getInstance();
+    Year = calendar.get(Calendar.YEAR) ;
+    Month = calendar.get(Calendar.MONTH);
+    Day = calendar.get(Calendar.DAY_OF_MONTH);
+
 
 
 }
@@ -164,21 +172,39 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     public void onClick(View view) {
         //Popup calendrier
         if(view==tvDate){
-            int jour,mois,annee;
-            calendar=Calendar.getInstance();
-            jour=calendar.get(Calendar.DAY_OF_MONTH);
-            mois=calendar.get(Calendar.MONTH);
-            annee=calendar.get(Calendar.YEAR);
-            datePick=new DatePickerDialog(getActivity(), (datePicker, yyyy, mm, jj) -> {
-                if (tvDate.getCurrentTextColor() == Color.RED) {
-                    tvDate.setTextColor(Color.BLACK);
-                }
-                tvDate.setText(jj + "/" + (mm + 1) + "/" + yyyy);
-            },annee,mois,jour);
-            datePick.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-            datePick.show();
-        }
 
+
+            datePickerDialog = DatePickerDialog.newInstance(this, Year, Month, Day);
+            datePickerDialog.setThemeDark(false);
+            datePickerDialog.showYearPickerFirst(false);
+            datePickerDialog.setTitle("Nos jours de voyage");
+
+
+            // Setting Min Date to today date
+            Calendar min_date_c = Calendar.getInstance();
+            datePickerDialog.setMinDate(min_date_c);
+
+
+
+            // Setting Max Date to next 2 years
+            Calendar max_date_c = Calendar.getInstance();
+            max_date_c.set(Calendar.DATE,Day+6);
+            datePickerDialog.setMaxDate(max_date_c);
+
+
+
+            //Disable all SUNDAYS and SATURDAYS between Min and Max Dates
+          /*  for (Calendar loopdate = min_date_c; min_date_c.before(max_date_c); min_date_c.add(Calendar.DATE, 1), loopdate = min_date_c) {
+                int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
+                if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
+                    Calendar[] disabledDays =  new Calendar[1];
+                    disabledDays[0] = loopdate;
+                    datePickerDialog.setDisabledDays(disabledDays);
+                }
+            }*/
+
+            datePickerDialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+        }
 
         if(view==btReservation){
 
@@ -297,4 +323,13 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
 
     }
 
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = Day+"/"+"0"+(Month+1)+"/"+Year;
+        if (tvDate.getCurrentTextColor() == Color.RED) {
+            tvDate.setTextColor(Color.BLACK);
+        }
+        tvDate.setText(date);
+
+    }
 }

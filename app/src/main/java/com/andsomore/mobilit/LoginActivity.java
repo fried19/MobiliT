@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
 import com.andsomore.mobilit.idao.IConnected;
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btConnexion,btShowPassword;
     private EditText etEmail,etPassword;
     private AlertDialog alertDialog;
+    private SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ApplicationContext.getAppContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +109,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     traitementUtilisateur.seConnecter(utilisateur, ok -> {
 
                         if (ok) {
-                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
+                            String type=preferences.getString("TypeUtilisateur","Non défini");
+                            if(type.equals("Chauffeur")){
+
+                                LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainChauffeur.class));
+                                finish();
+                                alertDialog.dismiss();
+                            }else{
+
+                                LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+
+                            }
+
                         } else {
                             alertDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "L'email et/ou le mot de passes " +
