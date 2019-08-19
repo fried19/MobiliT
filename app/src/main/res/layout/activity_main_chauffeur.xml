@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainChauffeur">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarChauffeur"
+        android:layout_width="match_parent"
+        app:titleTextColor="@color/colorWhite"
+        app:layout_collapseMode="pin"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ToolbarTheme"
+        android:layout_height="?attr/actionBarSize" />
+
+    <Button
+        android:id="@+id/btReset"
+        android:layout_width="215dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="100dp"
+        android:text="SIGNALER"
+        android:textSize="30dp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="250dp" />
+
+    <Button
+        android:id="@+id/btVerifier"
+        android:layout_width="215dp"
+        android:layout_height="70dp"
+        android:textColor="@color/colorSplashText"
+        android:text="VERIFIER"
+        android:textSize="30dp"
+        android:background="@color/colorPartialGreen"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="350dp" />
+
+</RelativeLayout>
