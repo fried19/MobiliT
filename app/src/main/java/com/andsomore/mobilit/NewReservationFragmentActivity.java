@@ -360,7 +360,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     }
         @Override
         public void onDateSet (DatePickerDialog view,int year, int monthOfYear, int dayOfMonth){
-            String date = Day + "/" + "0" + (Month + 1) + "/" + Year;
+            String date = dayOfMonth + "/" + "0" + (monthOfYear) + "/" + year;
             if (tvDate.getCurrentTextColor() == Color.RED) {
                 tvDate.setTextColor(Color.BLACK);
             }
