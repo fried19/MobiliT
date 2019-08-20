@@ -4,8 +4,12 @@ package com.andsomore.mobilit;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+
+import com.andsomore.mobilit.idao.IValue;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.MonthAdapter;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 
@@ -38,9 +43,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
 
@@ -122,16 +130,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
                 reservation.setVilleDepart(villeDepart);
                 reservation.setVilleArrivee(villeArrivee);
                 reservation.setNomBus("...");
-                //Conversion de la date de reservation
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("fr", "FR"));
-
-                try {
-                    date = formatter.parse(dateVoyage);//catch exception
-                    reservation.setJourVoyage(date);
-                } catch (ParseException e) {
-
-                    e.printStackTrace();
-                }
+                reservation.setJourVoyage(date);
                 //récupération de la date  (au format mardi 13 août 2019 par ex)
 
 //                 reservation.setEtatPaiement("...");
@@ -169,6 +168,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         //Popup calendrier
@@ -209,6 +209,14 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
 
             dateVoyage = tvDate.getText().toString();
             amount = Integer.parseInt(tvMontant.getText().toString());
+            //Conversion de la dateVoyage en type Date
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", new Locale("fr", "FR"));
+            try {
+                date = formatter.parse(dateVoyage);//catch exception
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
 
             //Affiche erreur si le deux villes sont équivalentes
             if (amount == 0) {
@@ -220,17 +228,34 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
                 tvDate.setTextColor(Color.RED);
             } else {
 
-                verifierPlaceDispo(villeDepart, villeArrivee, new IResult() {
+                verifierPlaceDispo(villeDepart, villeArrivee, new IValue() {
                     @Override
-                    public void getResult(boolean ok) {
-                        if (ok) {
+                    public void getValue(int value) {
+                        if (value > 5) {
                             Intent intent = new Intent(NewReservationFragmentActivity.this.getActivity(), PaygatePayementPageActivity.class);
                             //Envoie du montant
                             intent.putExtra("amount", amount);
                             NewReservationFragmentActivity.this.startActivityForResult(intent, PAYGATE_ACTIVITY_REQUEST_CODE);
-                        } else
-                            Toast.makeText(NewReservationFragmentActivity.this.getActivity(), "Il n'y a plus de place disponible pour ce voyage.Veuillez payer votre billet pour le lendemain", Toast.LENGTH_LONG).show();
+                        } else if((value >= 1) && (value <= 5)) {
+                            String text="Il ne reste que "+value+" place pour ce bus.Voulez-vous poursuivre le paiement?";
+                            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+                            builder.setMessage(text);
+                            builder.setPositiveButton("OUI", (dialogInterface, i) -> {
+                                Intent intent = new Intent(NewReservationFragmentActivity.this.getActivity(), PaygatePayementPageActivity.class);
+                                //Envoie du montant
+                                intent.putExtra("amount", amount);
+                                NewReservationFragmentActivity.this.startActivityForResult(intent, PAYGATE_ACTIVITY_REQUEST_CODE);
+                                dialogInterface.dismiss();
+                            });
+                            builder.setNegativeButton("NON", (dialogInterface, i) -> dialogInterface.dismiss());
+
+                            androidx.appcompat.app.AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }else if(value == 0){
+                            Toast.makeText(getActivity(),"Il ne reste plus de place disponible pour ce voyage.Veuillez choisir une autre date de voyage.",Toast.LENGTH_LONG).show();
+                        }
                     }
+
                 });
 
 
@@ -300,57 +325,49 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
         tvMontant.setText("0");
     }
 
-    private void verifierPlaceDispo(String villeDepart, String villeArrivee, IResult result) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void verifierPlaceDispo(String villeDepart, String villeArrivee, IValue value) {
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE", new Locale("fr", "FR"));
+        String jour=null ;
+        try {
+
+            jour = formatter.format(date);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         String direction = villeDepart + "-" + villeArrivee;
-        vehiculeRef.whereEqualTo("direction", direction)
+        String finalJour = jour;
+        vehiculeRef
+                .whereEqualTo("direction", direction)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            if ((document.getLong("placeDisponible")).intValue() == 0) {
+                            Map<String, Long> map = (Map<String,Long>)document.get("placeDisponible");
 
+                                  value.getValue(map.get(finalJour).intValue());
 
-                                result.getResult(false);
-                            } else
-                                result.getResult(true);
                         }
-                    } else {
+                    }else {
                         Log.e(TAG, "Erreur: ", task.getException());
                     }
+
+
                 });
 
     }
+        @Override
+        public void onDateSet (DatePickerDialog view,int year, int monthOfYear, int dayOfMonth){
+            String date = Day + "/" + "0" + (Month + 1) + "/" + Year;
+            if (tvDate.getCurrentTextColor() == Color.RED) {
+                tvDate.setTextColor(Color.BLACK);
+            }
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = Day + "/" + "0" + (Month + 1) + "/" + Year;
-        if (tvDate.getCurrentTextColor() == Color.RED) {
-            tvDate.setTextColor(Color.BLACK);
-        }
-        tvDate.setText(date);
+            tvDate.setText(date);
 
-    }
-
-    private int dayToint(String date) {
-        int value=0;
-        if (date.contains("dimanche")) {
-            value=1;
-        } else if (date.contains("lundi")) {
-            value=2;
-        } else if (date.contains("mardi")) {
-            value=3;
-        } else if (date.contains("mercredi")) {
-            value=4;
-        } else if (date.contains("jeudi")) {
-            value=5;
-        } else if (date.contains("vendredi")) {
-            value=6;
-        } else if (date.contains("samedi")){
-            value=7;
         }
 
-        return value;
 
     }
-}

@@ -27,6 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainChauffeur extends AppCompatActivity implements View.OnClickListener {
     private Button btVerifier, btReset;
     private Toolbar toolbar;
@@ -87,7 +91,15 @@ public class MainChauffeur extends AppCompatActivity implements View.OnClickList
         }
 
         if (v == btReset) {
+            SimpleDateFormat formatter = new java.text.SimpleDateFormat("EEEE", new Locale("fr", "FR"));
+            String jour=null ;
+            try {
+                jour = formatter.format(new Date());
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String finalJour = jour;
             chauffeurRef
                     .whereEqualTo("numTelephone", numTel)
                     .get()
@@ -108,7 +120,7 @@ public class MainChauffeur extends AppCompatActivity implements View.OnClickList
                                                     String idVehicule=documeent.getId();
                                                     vehiculeRef
                                                             .document(idVehicule)
-                                                            .update("placeDisponible",50)
+                                                            .update("placeDisponible."+finalJour,50)
                                                             .addOnSuccessListener(aVoid -> Toast.makeText(MainChauffeur.this,"Félicitation!! Voyage terminé avec succès",Toast.LENGTH_SHORT).show())
                                                             .addOnFailureListener(e -> {
                                                                 e.printStackTrace();

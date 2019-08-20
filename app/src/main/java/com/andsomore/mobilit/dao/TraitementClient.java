@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -116,9 +117,20 @@ public void updateReservation(){
                             String idClient=document.getString("idClient");
                             String villeDepart=document.getString("villeDepart");
                             String idReservation=document.getId();
+                            Date jourVoyage = document.getDate("jourVoyage");
                             String villeArrivee=document.getString("villeArrivee") ;
                             int firePlace =document.getLong("numPlace").intValue();
 
+                            java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("EEEE", new Locale("fr", "FR"));
+                            String jour=null ;
+
+                            try {
+                                jour = formatter.format(jourVoyage);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            String finalJour = jour;
              //Requete Json pour vérifier l'état du paiement et mettre à jour la reservation du client
 
                             RequestQueue queue= VolleySingleton.getInstance(ApplicationContext.getAppContext()).getRequestQueue();
@@ -140,7 +152,7 @@ public void updateReservation(){
                                     String status=response.getString("status");
                                     if(status.contains("0") && firePlace == 0){
 
-                                        genererPlace(villeDepart,villeArrivee, (nomBus, numPlace) -> reservationRef
+                                        genererPlace(villeDepart,villeArrivee,finalJour, (nomBus, numPlace ) -> reservationRef
                                                 .document(idReservation)
                                                 .update("nomBus",nomBus,"numPlace",numPlace,"etatPaiement","Validé")
                                                 .addOnSuccessListener(aVoid -> {
@@ -174,7 +186,7 @@ public void updateReservation(){
 }
 
 
-public void genererPlace(String villeDepart, String villeArrivee, IGenplace genplace){
+public void genererPlace(String villeDepart, String villeArrivee,String jour, IGenplace genplace){
         String direction=villeDepart+"-"+villeArrivee;
 
         vehiculeRef
@@ -183,11 +195,11 @@ public void genererPlace(String villeDepart, String villeArrivee, IGenplace genp
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-
+                            Map<String, Long> map = (Map<String,Long>)document.get("placeDisponible");
                             int placeTotale,placeDisponible,numPlace;
                             String idVehicule,nomBus;
                             placeTotale=document.getLong("placeTotale").intValue();
-                            placeDisponible=document.getLong("placeDisponible").intValue();
+                            placeDisponible=map.get(jour).intValue();
                             idVehicule=document.getId();
                             nomBus=document.getString("nomBapteme");
                             if(placeDisponible != 0){
@@ -196,7 +208,7 @@ public void genererPlace(String villeDepart, String villeArrivee, IGenplace genp
                                 placeDisponible--;
                                 vehiculeRef
                                         .document(idVehicule)
-                                        .update("placeDisponible",placeDisponible)
+                                        .update("placeDisponible."+jour,placeDisponible)
                                         .addOnSuccessListener(aVoid -> { })
                                         .addOnFailureListener(e -> e.printStackTrace());
                             }
