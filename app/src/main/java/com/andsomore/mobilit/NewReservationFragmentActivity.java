@@ -246,6 +246,7 @@ public class NewReservationFragmentActivity extends Fragment implements View.OnC
                                 intent.putExtra("amount", amount);
                                 NewReservationFragmentActivity.this.startActivityForResult(intent, PAYGATE_ACTIVITY_REQUEST_CODE);
                                 dialogInterface.dismiss();
+
                             });
                             builder.setNegativeButton("NON", (dialogInterface, i) -> dialogInterface.dismiss());
 
