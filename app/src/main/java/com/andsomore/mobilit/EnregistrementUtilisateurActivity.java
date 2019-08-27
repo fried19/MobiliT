@@ -103,12 +103,12 @@ public class EnregistrementUtilisateurActivity extends AppCompatActivity impleme
                 Utilisateur utilisateur=new Utilisateur(Nom,Prenom,Telephone,Email,Pswd,TypeCompte);
                 TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
                 alertDialog.show();
-                alertDialog.setMessage("Enrégistrement en cour...");
+                alertDialog.setMessage("Enrégistrement en cours...");
 
                 traitementUtilisateur.creerCompte(utilisateur, ok -> {
                     if(ok){
                         startActivity( new Intent(this, MainActivity.class));
-                        View main=findViewById(R.id.map);
+                        View main=findViewById(R.id.main);
                         Snackbar.make(main,"Vous êtes maintenant inscrit sur notre plateforme!! ",Snackbar.LENGTH_SHORT).show();
                     }else {
                         alertDialog.dismiss();

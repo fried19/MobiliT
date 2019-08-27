@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -122,5 +124,12 @@ public class ReservationActivity extends AppCompatActivity implements SwipeRefre
         SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String Telephone=preferences.getString("Telephone","Nom defini");
         return Telephone;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
     }
 }

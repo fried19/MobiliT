@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.andsomore.mobilit">
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".Singleton.ApplicationContext"
@@ -21,18 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainChauffeur"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".MainActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".MainChauffeur"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".verificationRecuReservation"
             android:label="Verification de recu"
             android:parentActivityName=".MainChauffeur"
             android:theme="@style/AppTheme.RequireActionBarFull" />
-
-        <meta-data
-            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="barcode" />
-
         <activity
             android:name=".genererRecuReservation"
             android:label="Recu de voyage"
@@ -40,10 +29,14 @@
             android:theme="@style/AppTheme.RequireActionBarFull" />
         <activity
             android:name=".ReservationActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".PaygatePayementPageActivity"
             android:theme="@style/AppTheme.RequireActionBar" />
+        <activity
+            android:name=".EnregistrementUtilisateurActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -52,17 +45,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EnregistrementUtilisateurActivity"
-            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -75,6 +57,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="barcode" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

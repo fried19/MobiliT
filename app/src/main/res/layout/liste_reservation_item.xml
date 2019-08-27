@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/cvDate"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="15dp"
             android:text="..."
             android:textColor="@color/colorSplashText" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="145dp"
+            android:layout_marginStart="130dp"
             android:layout_below="@+id/tvLieuVoyage"
             android:text="..."
             android:textColor="@color/colorSplashText" />
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="85dp"
+            android:layout_marginStart="75dp"
             android:layout_below="@+id/tvJourVoyage"
             android:text="..."
             android:textColor="@color/colorSplashText" />
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvNomBus"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="110dp"
             android:layout_marginTop="2dp"
             android:text="..."
             android:textColor="@color/colorSplashText" />
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvNumPlace"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="2dp"
             android:text="..."
             android:textColor="@color/colorSplashText" />
@@ -143,7 +143,7 @@
             android:layout_height="20dp"
             android:layout_below="@+id/tvNumPlace"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="269dp"
+            android:layout_marginStart="250dp"
             android:layout_marginTop="20dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"

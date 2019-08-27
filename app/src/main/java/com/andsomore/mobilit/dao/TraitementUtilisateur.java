@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.entite.Utilisateur;
 import com.andsomore.mobilit.idao.IConnected;
+import com.andsomore.mobilit.idao.IResult;
 import com.andsomore.mobilit.idao.IUtilisateur;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -109,9 +110,30 @@ public class TraitementUtilisateur implements IUtilisateur<Utilisateur> {
 
     }
 
+
+
     @Override
     public void isConnected(boolean ok) {
 
+    }
+
+    @Override
+    public void isDriver(IResult result) {
+        db.collection("CHAUFFEUR")
+                .whereEqualTo("nom",preferences.getString("Nom","non defini"))
+                .whereEqualTo("numTelephone",preferences.getString("Telephone","non defini"))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (!task.getResult().isEmpty()) {
+                          result.getResult(true);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                            result.getResult(false);
+                        }
+                    }
+                });
     }
 
 }

@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(GONE);
                 busImageView.setVisibility(GONE);
 
-                startActivity(new Intent(WelcomeActivity.this, ReservationActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                 finish();
 
             }

@@ -24,6 +24,7 @@ import com.andsomore.mobilit.Singleton.ApplicationContext;
 import com.andsomore.mobilit.dao.TraitementUtilisateur;
 import com.andsomore.mobilit.entite.Utilisateur;
 import com.andsomore.mobilit.idao.IConnected;
+import com.andsomore.mobilit.idao.IResult;
 
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -105,22 +106,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     TraitementUtilisateur traitementUtilisateur=new TraitementUtilisateur();
 
                     alertDialog.show();
-                    alertDialog.setMessage("Connexion en cour...");
+                    alertDialog.setMessage("Connexion en cours...");
                     traitementUtilisateur.seConnecter(utilisateur, ok -> {
 
                         if (ok) {
-                            String type=preferences.getString("TypeUtilisateur","Non défini");
-                            if(type.equals("Chauffeur")){
+                            traitementUtilisateur.isDriver(new IResult() {
+                                @Override
+                                public void getResult(boolean ok) {
+                                    if(ok){
 
-                                LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainChauffeur.class));
-                                finish();
-                                alertDialog.dismiss();
-                            }else{
+                                        LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainChauffeur.class));
+                                        finish();
+                                        alertDialog.dismiss();
+                                    }else{
 
-                                LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
+                                        LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
 
-                            }
+                                    }
+                                }
+                            });
 
                         } else {
                             alertDialog.dismiss();

@@ -7,6 +7,7 @@ public interface IUtilisateur<T> {
     public boolean supprimerCompte(T t);
     public boolean creerCompte(T t,IConnected connected);
     public void isConnected(boolean ok);
+    public void isDriver(IResult result);
 
 
 
